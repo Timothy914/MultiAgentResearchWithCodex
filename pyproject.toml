@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dyco-repair"
+version = "0.1.0"
+description = "Dynamic topology and learnable orchestration for multi-agent code repair"
+readme = "ResearchProposal.md"
+requires-python = ">=3.10"
+dependencies = [
+  "PyYAML>=6.0",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.0",
+]
+llm = [
+  "transformers>=4.40",
+  "accelerate>=0.28",
+  "huggingface_hub>=0.22",
+]
+eval = [
+  "datasets>=2.18",
+]
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+

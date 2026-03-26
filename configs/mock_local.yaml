@@ -1,0 +1,7 @@
+extends: base.yaml
+env:
+  name: mock
+  use_real_models: false
+  save_trajectory: true
+  save_summary: true
+

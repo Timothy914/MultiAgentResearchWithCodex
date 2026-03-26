@@ -1,0 +1,10 @@
+{
+  "issue_id": "easy-001",
+  "description": "Fix the serializer so it preserves empty dictionaries.",
+  "difficulty": "easy",
+  "target_files": ["serializer.py"],
+  "success_patch_keywords": ["preserve", "empty_dict"],
+  "failing_tests": ["test_preserves_empty_dict"],
+  "budget_total": 8
+}
+

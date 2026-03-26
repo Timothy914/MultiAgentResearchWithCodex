@@ -1,0 +1,10 @@
+{
+  "issue_id": "hard-001",
+  "description": "Fix retry middleware so timeout errors surface after backoff exhaustion.",
+  "difficulty": "hard",
+  "target_files": ["middleware/retry.py"],
+  "success_patch_keywords": ["timeout", "backoff_exhausted"],
+  "failing_tests": ["test_timeout_after_backoff", "test_preserves_retry_state"],
+  "budget_total": 8
+}
+

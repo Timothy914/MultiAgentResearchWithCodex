@@ -1,0 +1,6 @@
+output_root: outputs
+trajectory_filename: trajectory.json
+summary_filename: summary.json
+save_trajectory: true
+save_summary: true
+

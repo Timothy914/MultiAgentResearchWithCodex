@@ -1,0 +1,17 @@
+seed: 7
+output_root: outputs
+budget:
+  max_steps: 8
+  max_repeated_action: 2
+orchestrator:
+  ensemble_threshold: 0.75
+  reflection_threshold: 1
+  early_stop_margin: 1
+models:
+  manager: mock-manager
+  locator: mock-locator
+  developer: mock-developer
+  reviewer: mock-reviewer
+  reflector: mock-reflector
+  tester: mock-tester
+

@@ -1,0 +1,11 @@
+ensemble_threshold: 0.75
+reflection_threshold: 1
+reward_weights:
+  resolve_reward: 10.0
+  test_improvement: 2.0
+  patch_quality: 1.0
+  early_stop_bonus: 0.5
+  token_cost: 0.001
+  call_cost: 0.05
+  redundancy_penalty: 0.75
+

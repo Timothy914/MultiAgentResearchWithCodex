@@ -1,0 +1,7 @@
+extends: base.yaml
+env:
+  name: swebench-lite
+  dataset_path: /Data/public/SWE-bench/SWE-bench_Lite
+  max_instances: 50
+  language: python
+

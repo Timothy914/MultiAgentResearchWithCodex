@@ -99,6 +99,7 @@ class TaskState:
     failure_labels: list[str] = field(default_factory=list)
     call_counts: dict[str, int] = field(default_factory=dict)
     final_status: str = "running"
+    metadata: dict[str, Any] = field(default_factory=dict)
 
     def increment_action(self, action: AgentAction) -> None:
         self.call_counts[action.value] = self.call_counts.get(action.value, 0) + 1

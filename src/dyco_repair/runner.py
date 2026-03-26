@@ -4,24 +4,27 @@ from copy import deepcopy
 from pathlib import Path
 
 from dyco_repair.agents import build_mock_agent_suite
-from dyco_repair.envs import MockIssue, MockRepairEnv
+from dyco_repair.envs import MockRepairEnv
 from dyco_repair.eval import summarize_episode
 from dyco_repair.logging import RunLogger
-from dyco_repair.orchestrator import BudgetController, HeuristicOrchestrator
+from dyco_repair.orchestrator import BaseOrchestratorPolicy, build_orchestrator
 from dyco_repair.orchestrator.reward import compute_reward
 from dyco_repair.types import AgentAction, AgentResult, TaskState, Transition
 
 
 def run_episode(
-    issue: MockIssue,
+    issue: object,
     output_dir: str | Path | None = None,
     max_steps: int = 8,
     ensemble_threshold: float = 0.75,
+    policy_name: str = "heuristic",
+    orchestrator: BaseOrchestratorPolicy | None = None,
 ) -> tuple[TaskState, list[Transition], dict]:
     env = MockRepairEnv(issue)
     state = issue.initial_state()
-    orchestrator = HeuristicOrchestrator(
-        budget_controller=BudgetController(max_steps=max_steps),
+    orchestrator = orchestrator or build_orchestrator(
+        policy_name=policy_name,
+        max_steps=max_steps,
         ensemble_threshold=ensemble_threshold,
     )
     agents = build_mock_agent_suite()

@@ -11,7 +11,7 @@ SRC = ROOT / "src"
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
-from dyco_repair.envs import MockIssue
+from dyco_repair.envs import load_issue
 from dyco_repair.runner import run_episode
 from dyco_repair.runtime import query_gpus, select_best_gpu
 
@@ -53,16 +53,24 @@ def maybe_warmup_gpu(auto_gpu: bool) -> dict:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Run the end-to-end mock code-repair pipeline.")
-    parser.add_argument("--task", required=True, help="Path to a mock issue JSON file.")
+    parser = argparse.ArgumentParser(description="Run the end-to-end code-repair pipeline.")
+    parser.add_argument("--env", default="mock", choices=["mock", "swebench-lite"], help="Task source type.")
+    parser.add_argument("--task", required=True, help="Path to a task file. For swebench-lite this can be a JSON/JSONL file.")
+    parser.add_argument("--task-id", default=None, help="Optional task identifier when the task file contains multiple records.")
     parser.add_argument("--output-dir", default="outputs/pipeline-run", help="Directory for trajectory and summary output.")
     parser.add_argument("--max-steps", type=int, default=8)
     parser.add_argument("--auto-gpu", action="store_true", help="Auto-detect and warm up the best available GPU.")
+    parser.add_argument("--policy", default="heuristic", help="Orchestrator policy name.")
     args = parser.parse_args()
 
-    issue = MockIssue.from_path(args.task)
+    issue = load_issue(args.env, args.task, task_id=args.task_id)
     runtime_info = maybe_warmup_gpu(args.auto_gpu)
-    state, _, summary = run_episode(issue, output_dir=args.output_dir, max_steps=args.max_steps)
+    state, _, summary = run_episode(
+        issue,
+        output_dir=args.output_dir,
+        max_steps=args.max_steps,
+        policy_name=args.policy,
+    )
 
     runtime_path = Path(args.output_dir) / "runtime.json"
     runtime_path.parent.mkdir(parents=True, exist_ok=True)
@@ -76,7 +84,5 @@ def main() -> None:
     }
     print(json.dumps(payload, indent=2))
 
-
 if __name__ == "__main__":
     main()
-

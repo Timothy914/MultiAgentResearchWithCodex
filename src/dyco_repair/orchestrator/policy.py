@@ -1,10 +1,11 @@
 from __future__ import annotations
 
+from dyco_repair.orchestrator.base import BaseOrchestratorPolicy
 from dyco_repair.orchestrator.budget import BudgetController
 from dyco_repair.types import AgentAction, TaskState
 
 
-class HeuristicOrchestrator:
+class HeuristicOrchestrator(BaseOrchestratorPolicy):
     def __init__(
         self,
         budget_controller: BudgetController | None = None,
@@ -45,4 +46,3 @@ class HeuristicOrchestrator:
         if state.failure_count > 0:
             return AgentAction.DEVELOPER
         return AgentAction.TERMINATE
-
